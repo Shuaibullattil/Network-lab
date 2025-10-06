@@ -1,6 +1,5 @@
 import socket
 
-# Define IP and Port
 HOST = '127.0.0.1'
 PORT = 8080
 
@@ -12,9 +11,9 @@ print(f"UDP Server is running on {HOST}:{PORT}")
 
 # Receive data from client
 data, client_addr = server_socket.recvfrom(1024)
-print(f"Client: {data.decode()}")
+print(f"Client: {data.decode()}")  # Decoding bytes to string
 
-# Send reply to client
-server_socket.sendto(b"Hello from server", client_addr)
+# Send reply to client (using .encode())
+server_socket.sendto("Hello from server".encode(), client_addr)
 
 server_socket.close()
