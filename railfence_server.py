@@ -11,14 +11,12 @@ def decrypt_rail_fence(cipher_text, key):
         rail.append(row)
 
     # Step 2: Mark the zigzag pattern with '*'
-    direction_down = None
+    direction_down = False
     row, col = 0, 0
 
     for i in range(n):
-        if row == 0:
-            direction_down = True
-        if row == key - 1:
-            direction_down = False
+        if row == 0 or row == key - 1:
+            direction_down = not direction_down
 
         rail[row][col] = '*'
         col += 1
@@ -38,29 +36,29 @@ def decrypt_rail_fence(cipher_text, key):
 
     # Step 4: Read matrix in zigzag to get plain text
     result = []
+    direction_down = False
     row, col = 0, 0
 
     for i in range(n):
-        if row == 0:
-            direction_down = True
-        if row == key - 1:
-            direction_down = False
+        if row == 0 or row == key - 1:
+            direction_down = not direction_down
 
         if rail[row][col] != '\n':
             result.append(rail[row][col])
-            col += 1
 
-        if direction_down:
-            row += 1
-        else:
-            row -= 1
+        if i < n - 1:
+            col += 1
+            if direction_down:
+                row += 1
+            else:
+                row -= 1
 
     return "".join(result)
 
 
 def start_server():
     host = '127.0.0.1'
-    port = 65432
+    port = 8080
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))

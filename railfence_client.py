@@ -38,7 +38,7 @@ def encrypt_rail_fence(text, key):
 
 def start_client():
     host = '127.0.0.1'
-    port = 65432
+    port = 8080
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((host, port))
